@@ -31,7 +31,7 @@ jobs:
          
       - uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-libs
+          name: ffmpeg-libs-linux
           path: |
             ${{ github.workspace }}/installdir/lib/
             ${{ github.workspace }}/installdir/include/
@@ -39,15 +39,14 @@ jobs:
           overwrite: true
 
   build-macos:
-    runs-on: macos-13-large
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
         with:
           repository: FFmpeg/FFmpeg
       
       - name: Install build tools
-        run: |
-          brew install yasm nasm autoconf automake libtool pkg-config
+        run: brew install yasm nasm autoconf automake libtool pkg-config
       
       - name: Create install directory
         run: mkdir installdir
