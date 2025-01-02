@@ -30,7 +30,7 @@ jobs:
         run: mkdir installdir
 
       - name: Configure
-        run: ./configure --prefix=${{ GITHUB_WORKSPACE }}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
 
       - name: Compile ffmpeg
         run: make
@@ -53,6 +53,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-libs
-          path: ${GITHUB_WORKSPACE}/installdir/
+          path: ${{ GITHUB_WORKSPACE }}/installdir/
           retention-days: 90
           overwrite: true
