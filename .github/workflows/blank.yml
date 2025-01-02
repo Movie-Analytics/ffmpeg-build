@@ -22,9 +22,6 @@ jobs:
         with:
           repository: FFmpeg/FFmpeg
       
-      - name: change into directory
-        run: cd FFmpeg
-
       - name: install build tools
         run: apt-get update && apt-get install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget git autoconf libtool libssl-dev nasm jq libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev libbz2-dev
         # autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libgnutls28-dev libmp3lame-dev libsdl2-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev meson ninja-build pkg-config texinfo wget yasm zlib1g-dev
@@ -33,11 +30,10 @@ jobs:
         run: mkdir installdir
 
       - name: Configure
-        run: ./configure --prefix=/FFmpeg/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
 
       - name: Compile ffmpeg
         run: make
 
       - name: Install ffmpeg
         run: make install
-
