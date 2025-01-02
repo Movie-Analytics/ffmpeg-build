@@ -47,9 +47,12 @@ jobs:
          echo $PWD
          echo $GITHUB_WORKSPACE
          
+      - name: debug3
+        run: ls installdir
+         
       - uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-libs
-          path: ${GITHUB_WORKSPACE}/installdir/*.a
+          path: ${GITHUB_WORKSPACE}/installdir/
           retention-days: 90
           overwrite: true
