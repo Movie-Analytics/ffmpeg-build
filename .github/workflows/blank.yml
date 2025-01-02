@@ -53,6 +53,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-libs
-          path: ${{ GITHUB_WORKSPACE }}/installdir/
+          path: ${{ github.workspace }}/installdir/
           retention-days: 90
           overwrite: true
