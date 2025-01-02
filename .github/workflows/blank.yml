@@ -37,3 +37,19 @@ jobs:
 
       - name: Install ffmpeg
         run: make install
+
+      - name: debug
+        run: ls
+
+      - name: debug2
+        run: |
+         ls ..
+         echo $PWD
+         echo $GITHUB_WORKSPACE
+         
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-libs
+          path: ${GITHUB_WORKSPACE}/installdir/*.a
+          retention-days: 90
+          overwrite: true
