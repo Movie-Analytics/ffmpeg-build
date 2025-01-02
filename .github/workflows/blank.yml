@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-linux:
+    # The type of runner that the job will run on
+    runs-on: debian:oldstable
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+        with:
+          repository: FFmpeg/FFmpeg
+      
+      - name: change into directory
+        run: cd FFmpeg
+
+      - name: install build tools
+        run: apt-get update && apt-get install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget git autoconf libtool libssl-dev nasm jq libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev libbz2-dev
+        # autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libgnutls28-dev libmp3lame-dev libsdl2-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev meson ninja-build pkg-config texinfo wget yasm zlib1g-dev
+        
+      - name: create install directory
+        run: mkdir installdir
+
+      - name: Configure
+        run: ./configure --prefix=/FFmpeg/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
+
+      - name: Compile ffmpeg
+        run: make
+
+      - name: Install ffmpeg
+        run: make install
+
