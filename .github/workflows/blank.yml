@@ -46,7 +46,7 @@ jobs:
           repository: FFmpeg/FFmpeg
       
       - name: Install build tools
-        run: brew install yasm nasm autoconf automake libtool pkg-config
+        run: brew install yasm nasm automake
       
       - name: Create install directory
         run: mkdir installdir
