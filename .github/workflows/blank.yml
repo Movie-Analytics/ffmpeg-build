@@ -31,15 +31,22 @@ jobs:
 
       - name: Debug
         run: |
-          ls
-          ls installdir
+          pwd
+          echo "\n"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "\n"
+          ls -la
+          echo "\n"
+          ls -la installdir/
+          echo "\n"
+          ls -la installdir/include/
          
       - uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-libs-linux
           path: |
-            ${{ github.workspace }}/installdir/lib/
-            ${{ github.workspace }}/installdir/include/
+            installdir/lib/
+            installdir/include/
           retention-days: 90
           overwrite: true
 
