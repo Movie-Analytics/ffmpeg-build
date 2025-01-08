@@ -21,8 +21,7 @@ jobs:
         run: mkdir installdir
 
       - name: Configure
-        #run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
-        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC" --arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32-
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
 
       - name: Compile ffmpeg
         run: make
@@ -39,8 +38,29 @@ jobs:
           retention-days: 90
           overwrite: true
 
+      - name: Clean
+        run: make clean
+        
+      - name: Configure for Windows
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC" --arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32-
+      
+      - name: Compile ffmpeg for Windows
+        run: make
+
+      - name: Install ffmpeg for Windows
+        run: make install
+         
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-libs-win
+          path: |
+            installdir/lib/
+            installdir/include/
+          retention-days: 90
+          overwrite: true
+
   build-macos:
-    runs-on: macos-13vvvv
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
         with:
