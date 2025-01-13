@@ -135,7 +135,7 @@ jobs:
           --prefix=$(pwd)/installdir \
           --disable-shared \
           --enable-static \
-          --disable-x86asm
+          --disable-x86asm \
           --disable-doc \
           --disable-ffplay \
           --disable-ffprobe \
