@@ -134,6 +134,12 @@ jobs:
       - name: Check awk version
         shell: bash
         run: which awk && awk --version
+
+      - name: Patch common.mak
+        shell: bash
+        run: |
+          sed -i 's|gsub(/\\/|gsub(/\\\\/|' ffbuild/common.mak
+
       
       - name: Configure FFmpeg
         shell: bash
