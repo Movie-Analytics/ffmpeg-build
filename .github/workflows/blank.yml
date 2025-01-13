@@ -124,6 +124,11 @@ jobs:
           echo "Setting up build environment..."
           set INCLUDE=%INCLUDE%;%CD%\installdir\include
           set LIB=%LIB%;%CD%\installdir\lib
+    
+      - name: Install gawk
+        shell: bash    
+        run: |
+          pacman -Sy --noconfirm gawk make
       
       - name: Configure FFmpeg
         shell: bash
