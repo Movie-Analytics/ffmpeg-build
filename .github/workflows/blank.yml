@@ -152,7 +152,7 @@ jobs:
       
       - name: Build FFmpeg
         shell: bash
-        run: make
+        run: make -j1 V=1
       
       - name: Install FFmpeg
         run: make install
