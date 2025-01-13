@@ -131,6 +131,9 @@ jobs:
           update: true
           install: gawk make
 
+      - name: Check awk version
+        shell: bash
+        run: which awk && awk --version
       
       - name: Configure FFmpeg
         shell: bash
