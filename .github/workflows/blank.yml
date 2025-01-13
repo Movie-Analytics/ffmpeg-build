@@ -125,10 +125,12 @@ jobs:
           set INCLUDE=%INCLUDE%;%CD%\installdir\include
           set LIB=%LIB%;%CD%\installdir\lib
     
-      - name: Install gawk
-        shell: bash    
-        run: |
-          pacman -Sy --noconfirm gawk make
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: gawk make
+
       
       - name: Configure FFmpeg
         shell: bash
