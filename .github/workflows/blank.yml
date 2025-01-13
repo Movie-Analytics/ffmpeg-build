@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestasdfasdf
     container: debian:oldstable
 
     steps:
@@ -60,7 +60,7 @@ jobs:
           overwrite: true
 
   build-macos:
-    runs-on: macos-13
+    runs-on: macos-13adfasdfasdf
     steps:
       - uses: actions/checkout@v4
         with:
@@ -87,6 +87,74 @@ jobs:
           path: |
             ${{ github.workspace }}/installdir/lib/
             ${{ github.workspace }}/installdir/include/
+          retention-days: 90
+          overwrite: true
+
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: FFmpeg/FFmpeg
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+      
+      - name: Setup MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      
+      - name: Install YASM
+        run: |
+          curl -L https://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win64.exe -o yasm.exe
+          mkdir tools
+          move yasm.exe tools\yasm.exe
+          echo %CD%\tools >> %GITHUB_PATH%
+      
+      - name: Create install directory
+        run: mkdir installdir
+      
+      - name: Set environment variables
+        run: |
+          echo "Setting up build environment..."
+          set INCLUDE=%INCLUDE%;%CD%\installdir\include
+          set LIB=%LIB%;%CD%\installdir\lib
+      
+      - name: Configure FFmpeg
+        run: |
+          configure ^
+          --toolchain=msvc ^
+          --target-os=win64 ^
+          --arch=x86_64 ^
+          --prefix=%CD%\installdir ^
+          --disable-shared ^
+          --enable-static ^
+          --enable-asm ^
+          --enable-yasm ^
+          --disable-doc ^
+          --disable-ffplay ^
+          --disable-ffprobe ^
+          --disable-debug ^
+          --extra-cflags="-MT -O2" ^
+          --extra-ldflags="-LTCG"
+      
+      - name: Build FFmpeg
+        run: nmake
+      
+      - name: Install FFmpeg
+        run: nmake install
+      
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-libs-windows-msvc
+          path: |
+            installdir/lib/
+            installdir/include/
           retention-days: 90
           overwrite: true
 
