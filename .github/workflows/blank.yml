@@ -139,7 +139,13 @@ jobs:
         shell: bash
         run: |
           sed -i 's|gsub(/\\/|gsub(/\\\\/|' ffbuild/common.mak
-
+      
+      - name: Configure PATH for MSYS2
+        shell: bash
+        run: |
+          export PATH="/usr/bin:/mingw64/bin:$PATH"
+          which awk
+          which make
       
       - name: Configure FFmpeg
         shell: bash
