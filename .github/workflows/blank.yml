@@ -126,6 +126,23 @@ jobs:
           set LIB=%LIB%;%CD%\installdir\lib
       
       - name: Configure FFmpeg
+        shell: bash
+        run: |
+          ./configure \
+          --toolchain=msvc \
+          --target-os=win64 \
+          --arch=x86_64 \
+          --prefix=$(pwd)/installdir \
+          --disable-shared \
+          --enable-static \
+          --enable-asm \
+          --enable-yasm \
+          --disable-doc \
+          --disable-ffplay \
+          --disable-ffprobe \
+          --disable-debug \
+          --extra-cflags="-MT -O2" \
+          --extra-ldflags="-LTCG"
         run: |
           ./configure ^
           --toolchain=msvc ^
