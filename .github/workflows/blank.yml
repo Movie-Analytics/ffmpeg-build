@@ -144,6 +144,7 @@ jobs:
           --extra-ldflags="-LTCG"
       
       - name: Build FFmpeg
+        shell: bash
         run: make
       
       - name: Install FFmpeg
