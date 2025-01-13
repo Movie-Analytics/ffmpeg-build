@@ -144,10 +144,10 @@ jobs:
           --extra-ldflags="-LTCG"
       
       - name: Build FFmpeg
-        run: nmake
+        run: make
       
       - name: Install FFmpeg
-        run: nmake install
+        run: make install
       
       - uses: actions/upload-artifact@v4
         with:
