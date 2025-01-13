@@ -127,7 +127,7 @@ jobs:
       
       - name: Configure FFmpeg
         run: |
-          configure ^
+          ./configure ^
           --toolchain=msvc ^
           --target-os=win64 ^
           --arch=x86_64 ^
