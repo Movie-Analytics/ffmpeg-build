@@ -141,7 +141,7 @@ jobs:
           export PATH="/usr/bin:/mingw64/bin:$PATH"
           echo "Using awk from: $(which awk)"
           echo "Awk version: $(awk --version)"
-          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
+          sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/common.mak
       
       - name: Configure FFmpeg
         shell: bash
