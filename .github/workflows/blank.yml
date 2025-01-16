@@ -141,6 +141,8 @@ jobs:
           export PATH="/usr/bin:/mingw64/bin:$PATH"
           echo "Using awk from: $(which awk)"
           echo "Awk version: $(awk --version)"
+          ls -l /mingw64/bin
+          which make
           sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/common.mak
       
       - name: Configure FFmpeg
@@ -163,8 +165,6 @@ jobs:
       
       - name: Build FFmpeg
         shell: bash
-        env:
-          PATH: /usr/bin:/mingw64/bin:$PATH
         run: make -j1 V=1
       
       - name: Install FFmpeg
