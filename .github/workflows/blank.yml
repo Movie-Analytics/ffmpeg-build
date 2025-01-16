@@ -163,8 +163,9 @@ jobs:
           echo "BEFOREEEEEEEEEEEEEEEEEEEEEE"
           find . -name "*.mak" -exec grep -l "awk" {} \;
           find . -name "*.mak" -exec grep -l "showIncludes" {} \;
-          ls -l ffbuild/
-          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
+          ls ffbuild/
+          cat ffbuild/config.mak
+          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/config.mak
       
       - name: Build FFmpeg
         shell: bash
