@@ -143,10 +143,10 @@ jobs:
           echo "Awk version: $(awk --version)"
           which make
           echo "BEFOREEEEEEEEEEEEEEEEEEEEEE"
-          cat ffbuild/common.make | grep awk
+          cat ffbuild/common.mak | grep awk
           sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
           echo "AFTERRRRRRRRRRRRRRRR"
-          cat ffbuild/common.make | grep awk
+          cat ffbuild/common.mak | grep awk
       
       - name: Configure FFmpeg
         shell: bash
