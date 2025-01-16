@@ -165,7 +165,7 @@ jobs:
           find . -name "*.mak" -exec grep -l "showIncludes" {} \;
           ls ffbuild/
           cat ffbuild/config.mak
-          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/config.mak
+          sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/config.mak
       
       - name: Build FFmpeg
         shell: bash
