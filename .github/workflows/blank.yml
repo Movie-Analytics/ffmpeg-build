@@ -150,28 +150,13 @@ jobs:
           --extra-cflags="-MT -O2" \
           --extra-ldflags="-LTCG"
 
-      - name: Configure PATH for MSYS2
+      - name: Fix awk call
         shell: bash
-        run: |
-          export PATH="/usr/bin:/mingw64/bin:$PATH"
-          which awk
-          which make
-          export PATH="/usr/bin:/mingw64/bin:$PATH"
-          echo "Using awk from: $(which awk)"
-          echo "Awk version: $(awk --version)"
-          which make
-          echo "BEFOREEEEEEEEEEEEEEEEEEEEEE"
-          find . -name "*.mak" -exec grep -l "awk" {} \;
-          find . -name "*.mak" -exec grep -l "showIncludes" {} \;
-          ls ffbuild/
-          cat ffbuild/config.mak
-          sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/config.mak
+        run: sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/config.mak
       
       - name: Build FFmpeg
         shell: bash
-        run: |
-          which make
-          make -j1 V=1
+        run: make -j1 V=1
       
       - name: Install FFmpeg
         run: make install
