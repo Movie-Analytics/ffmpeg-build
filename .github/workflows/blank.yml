@@ -142,7 +142,7 @@ jobs:
       
       - uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-libs-windows-msvc
+          name: ffmpeg-libs-win
           path: |
             installdir/lib/
             installdir/include/
