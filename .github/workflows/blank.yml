@@ -141,9 +141,12 @@ jobs:
           export PATH="/usr/bin:/mingw64/bin:$PATH"
           echo "Using awk from: $(which awk)"
           echo "Awk version: $(awk --version)"
-          ls -l /mingw64/bin
           which make
-          sed -i 's/gsub(\/\\\\/gsub(\/\\\\\\\\/g' ffbuild/common.mak
+          echo "BEFOREEEEEEEEEEEEEEEEEEEEEE"
+          cat ffbuild/common.make | grep awk
+          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
+          echo "AFTERRRRRRRRRRRRRRRR"
+          cat ffbuild/common.make | grep awk
       
       - name: Configure FFmpeg
         shell: bash
@@ -165,7 +168,9 @@ jobs:
       
       - name: Build FFmpeg
         shell: bash
-        run: make -j1 V=1
+        run: |
+          which make
+          make -j1 V=1
       
       - name: Install FFmpeg
         run: make install
