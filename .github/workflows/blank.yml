@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latestasdfasdf
+    runs-on: ubuntu-latest
     container: debian:oldstable
 
     steps:
@@ -15,7 +15,7 @@ jobs:
           repository: FFmpeg/FFmpeg
       
       - name: install build tools
-        run: apt-get update && apt-get install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget git autoconf libtool libssl-dev nasm jq libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev libbz2-dev g++-mingw-w64 gcc-mingw-w64
+        run: apt-get update && apt-get install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget git autoconf libtool libssl-dev nasm jq libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev libbz2-dev
         
       - name: create install directory
         run: mkdir installdir
@@ -38,29 +38,8 @@ jobs:
           retention-days: 90
           overwrite: true
 
-      - name: Clean
-        run: make clean
-        
-      - name: Configure for Windows
-        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC" --arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32-
-      
-      - name: Compile ffmpeg for Windows
-        run: make
-
-      - name: Install ffmpeg for Windows
-        run: make install
-         
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ffmpeg-libs-win
-          path: |
-            installdir/lib/
-            installdir/include/
-          retention-days: 90
-          overwrite: true
-
   build-macos:
-    runs-on: macos-13adfasdfasdf
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
         with:
