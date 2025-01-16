@@ -161,10 +161,10 @@ jobs:
           echo "Awk version: $(awk --version)"
           which make
           echo "BEFOREEEEEEEEEEEEEEEEEEEEEE"
-          cat ffbuild/common.mak
+          find . -name "*.mak" -exec grep -l "awk" {} \;
+          find . -name "*.mak" -exec grep -l "showIncludes" {} \;
+          ls -l ffbuild/
           sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
-          echo "AFTERRRRRRRRRRRRRRRR"
-          cat ffbuild/common.mak | grep awk
       
       - name: Build FFmpeg
         shell: bash
