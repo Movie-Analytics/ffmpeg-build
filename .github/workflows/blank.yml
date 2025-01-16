@@ -130,22 +130,18 @@ jobs:
         with:
           update: true
           install: gawk make
+          path-type: minimal
 
-      - name: Check awk version
-        shell: bash
-        run: which awk && awk --version
-
-      - name: Patch common.mak
-        shell: bash
-        run: |
-          sed -i 's|gsub(/\\/|gsub(/\\\\/|' ffbuild/common.mak
-      
       - name: Configure PATH for MSYS2
         shell: bash
         run: |
           export PATH="/usr/bin:/mingw64/bin:$PATH"
           which awk
           which make
+          export PATH="/usr/bin:/mingw64/bin:$PATH"
+          echo "Using awk from: $(which awk)"
+          echo "Awk version: $(awk --version)"
+          sed -i 's|awk.*showIncludes.*|awk -v q=\\\" '"'/including/ { sub(/^.*file: */, \"\"); gsub(/\\\\\\\\/,\"/\"); if (!match($$0, / /)) print \"'"\$$(1):\",' \$$0 }'|" ffbuild/common.mak
       
       - name: Configure FFmpeg
         shell: bash
@@ -167,6 +163,8 @@ jobs:
       
       - name: Build FFmpeg
         shell: bash
+        env:
+          PATH: /usr/bin:/mingw64/bin:$PATH
         run: make -j1 V=1
       
       - name: Install FFmpeg
