@@ -21,7 +21,7 @@ jobs:
         run: mkdir installdir
 
       - name: Configure
-        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-drm --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --extra-cflags="-fPIC -fvisibility=hidden -O2 -g" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -g" --extra-ldflags="-fPIC"
 
       - name: Compile ffmpeg
         run: make
