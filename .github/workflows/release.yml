@@ -21,7 +21,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
         run: |
-          latest_run=$(gh run list --workflow=build_electron.yml --limit 1 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId')
+          latest_run=$(gh run list --workflow=build.yml --limit 1 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId')
           echo "run_id=$latest_run" >> $GITHUB_OUTPUT
 
       - name: Download Artifacts
