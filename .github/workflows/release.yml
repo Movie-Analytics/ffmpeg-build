@@ -29,6 +29,9 @@ jobs:
         with:
           github-token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
           run-id: ${{ steps.get-run.outputs.run_id }}
+      
+      - name: debug
+        run: ls
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
