@@ -31,7 +31,7 @@ jobs:
           run-id: ${{ steps.get-run.outputs.run_id }}
       
       - name: debug
-        run: ls
+        run: ls ffmpeg-libs-linux
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
