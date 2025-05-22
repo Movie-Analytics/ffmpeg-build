@@ -30,16 +30,19 @@ jobs:
           github-token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
           run-id: ${{ steps.get-run.outputs.run_id }}
       
-      - name: debug
-        run: ls ffmpeg-libs-linux
+      - name: Zip the artifacts
+        run: |
+          zip -r ffmpeg-libs-linux.zip ffmpeg-libs-linux
+          zip -r ffmpeg-libs-win.zip ffmpeg-libs-win
+          zip -r ffmpeg-libs-macos.zip ffmpeg-libs-macos
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ffmpeg-libs-linux
-            ffmpeg-libs-macos
-            ffmpeg-libs-win
+            ffmpeg-libs-linux.zip
+            ffmpeg-libs-macos.zip
+            ffmpeg-libs-win.zip
           tag_name: ${{ github.event.inputs.release-tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
