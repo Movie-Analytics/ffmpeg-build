@@ -22,7 +22,7 @@ jobs:
         run: mkdir installdir
 
       - name: Configure
-        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --enable-runtime-cpudetect --extra-cflags="-fPIC -fvisibility=hidden -O2 -march=x86-64 -mtune=generic -Wa,--noexecstack" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -march=x86-64 -mtune=generic -Wa,--noexecstack" --extra-ldflags="-Wl,-z,noexecstack,-fPIC"
+        run: ./configure --prefix=${GITHUB_WORKSPACE}/installdir --disable-shared --enable-static --enable-pic --enable-runtime-cpudetect --extra-cflags="-fPIC -fvisibility=hidden -O2 -march=x86-64 -mtune=generic -Wa,--noexecstack" --extra-cxxflags="-fPIC -fvisibility=hidden -O2 -march=x86-64 -mtune=generic -Wa,--noexecstack" --extra-ldflags="-Wl,-z,noexecstack"
 
       - name: Compile ffmpeg
         run: make
